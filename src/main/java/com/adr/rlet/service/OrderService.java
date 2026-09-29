@@ -3,12 +3,16 @@ package com.adr.rlet.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.adr.rlet.audit.Audited;
+
 @Service
 public class OrderService {
 
 	
 	@Autowired
 	private ValidationService validationService;
+	
+	
 	
 	public String placeOrder(String item,int quantity) {
 		if(quantity<=0) {
@@ -22,7 +26,16 @@ public class OrderService {
 		validationService.validateQuantity(quantity);   // <-- calling "this", not the proxy
 	    return "Validated order: " + quantity + " x " + item;
 	}
-
+	
+	@Audited(action = "PLACE_ORDER")
+	public String placeAuditedOrder(String item,int quantity) {
+		if(quantity<=0) {
+			throw new IllegalArgumentException("Quantity must be positive");
+		}
+		
+		return "Audited order placed: "+ quantity +" x "+ item;		
+	}
+	
 
 	
 	public double calculateTotal(double price, int quantity) {

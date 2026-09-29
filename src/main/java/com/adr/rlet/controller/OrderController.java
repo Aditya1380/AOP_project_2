@@ -32,4 +32,9 @@ public class OrderController {
     public String placeValidated(@RequestParam String item, @RequestParam int quantity) {
         return orderService.placeOrderWithValidation(item, quantity);
     }
+    
+    @PostMapping("/audited")
+    public String placeAudited(@RequestParam String item, @RequestParam int quantity) {
+        return orderService.placeAuditedOrder(item, quantity);
+    }
 }
