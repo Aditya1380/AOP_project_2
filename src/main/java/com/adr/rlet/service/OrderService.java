@@ -1,10 +1,14 @@
 package com.adr.rlet.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class OrderService {
 
+	
+	@Autowired
+	private ValidationService validationService;
 	
 	public String placeOrder(String item,int quantity) {
 		if(quantity<=0) {
@@ -15,14 +19,11 @@ public class OrderService {
 	}
 	
 	public String placeOrderWithValidation(String item, int quantity) {
-	    validateQuantity(quantity);   // <-- calling "this", not the proxy
+		validationService.validateQuantity(quantity);   // <-- calling "this", not the proxy
 	    return "Validated order: " + quantity + " x " + item;
 	}
 
-	public void validateQuantity(int quantity) {
-	    if (quantity <= 0) throw new IllegalArgumentException("bad qty");
-	}
-	
+
 	
 	public double calculateTotal(double price, int quantity) {
         // simulate a bit of work

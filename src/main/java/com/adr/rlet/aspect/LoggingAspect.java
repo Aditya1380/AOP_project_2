@@ -28,7 +28,7 @@ public class LoggingAspect {
 	
 	@Before("serviceMethods()")
     public void logBefore(JoinPoint joinPoint) {
-		log.info("Aditya");
+		
         log.info("➡️  BEFORE: {} called with args = {}",joinPoint.getSignature().toShortString(),Arrays.toString(joinPoint.getArgs()));
     }
 	
